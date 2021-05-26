@@ -44,7 +44,7 @@ Bom, o nome já é bem intuitivo com relação a esse problema. Porém, vamos su
 foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com que a pesquisa [[celularmotorola]] e outras semelhantes - [[liquidificadorarno]], [[livroharrypotter]] - não deem uma mensagem de erro pedindo para a pessoa que digitou usar outros termos, mas sim adaptar para que a própria loja interprete o que poderia ser e retorne resultados, assim como ocorre na Amazon.
 
 Para você mostrar suas habilidades como novo desenvolvedor, você pode usar nosso algoritmo,
-que resolve o _Problema da Quebra em Palavras_.
+que resolve o _Problema da Quebra em Palavras_. No caso, este algoritimo é uma simplificação, ele não quebra o texto em si, devolvendo a resposta a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
 
 Tá, vamos explicar como funciona como uma linguagem mais de programador.
 
@@ -67,7 +67,7 @@ Vamos entender melhor... Supondo que temos um banco de palavras interno:
 
 ??? Exercício 2
 
-Considerando as seguintes strings de entrada e considerando o banco de palavras acima, o que, para cada uma dela, o algoritmo retornaria?
+Considerando os seguintes textos de entrada e considerando o banco de palavras acima, o que, para cada uma dela, o algoritmo retornaria?
 
 -   **[[samsunggalaxy]]**
 -   **[[fonedeouvido]]**
@@ -76,16 +76,16 @@ Considerando as seguintes strings de entrada e considerando o banco de palavras 
 
 :::Gabarito
 
--   [[samsunggalaxy]]: {green}(True)
--   [[fonedeouvido]]: {red}(False)
--   [[argeladeira]]: {green}(True)
--   [[panelar]]: {red}(False)
+-   [[samsunggalaxy]]: {green}(True), pois no dicionário há as palavras samsung e galaxy, por exemplo.
+-   [[fonedeouvido]]: {red}(False), nesse caso, temos algo muito interessante... nós sabemos que o texto "fonedeouvido" é quebrável em 3 palavras, porém no contexto pede-se que seja considerado o banco de palavras que foi dado, como a palavra "de" não esta neste banco, tem-se que nesse caso o texto não pode ser quebrado.
+-   [[argeladeira]]: {green}(True), pois no dicionário há as palavras ar e geladeira.
+-   [[panelar]]: {red}(False), pois é apenas uma palavra.
 
 ???
 
 ??? Exercício 3
 
-Considerando as strings que retonaram **{green}(True)**, como elas ficariam depois de serem corrigidas, ou seja, depois de os espaços serem colocados?
+Considerando os textos que retonaram **{green}(True)**, como elas ficariam depois de serem corrigidas, ou seja, depois de os espaços serem colocados?
 
 :::Gabarito
 
@@ -99,7 +99,7 @@ que retornaria as opções faria é simplesmente mostraria as duas possibilidade
 
 ???
 
-Note que não é apenas repartir as palavras, elas devem ser repartidas nos pontos certos, para que toda ela seja segmentada da maneira correta!
+Note que não é apenas repartir os textos, eles devem ser repartidos nos pontos certos, para que todo ele seja segmentada da maneira correta!
 
 Para conseguir repartir a string de entrada nesse locais corretos, o algoritmo vai pegando cada letra da esquerda para a direira e vai formando substrings.
 Se o algoritmo checar que a parte esquerda da string está no banco de palavras, resta descobrir se a parte direita que restou também pode ser segmentada em outras palavras presentes no banco de palavras.
@@ -180,14 +180,31 @@ Lembre-se de uma das nossas APS!
 !!!
 
 :::Gabarito
-Usamos isso na APS 3, de DNA. A solução é utilizar a **programação dimâmica**, pois com ela se evita de repetir o serviço que já foi feito, ou seja, a substring que já foi analisada não precisa ser analisada novamente, é só utilizar o valor que está armazenada numa matriz que construímos.
+Usamos isso na APS 3, de DNA. A solução é utilizar a **programação dinâmica**, pois com ela se evita de repetir o serviço que já foi feito, ou seja, a substring que já foi analisada não precisa ser analisada novamente, é só utilizar o valor que está armazenada numa matriz que construímos.
 ???
+
+## Modificando o Algoritmo Recursivo
+
+Agora que já entendemos como a versão recursiva desse algoritmo funciona, vamos fazer uma modificação para que possamos devolver mais a ideia deste algoritmo.
+
+Na versão recursiva apresentada, todas as vezes que chamamos a função, passamos um string diferente para ela, que é uma substring gerada a partir do argumento que foi passado anteriormente.
+
+??? Exercício 6
+
+Existe alguma maneira de fazer com que em todas as chamadas seja passada a mesma string, porém em cada chamada analisar uma parte diferente dessa string? Se sim, escreva como ficaria os parâmetros dessa função.
+
+:::Gabarito
+Sim, é possível sempre passar a mesma string e cada vez analisar uma parte diferente, basta que passemos a partir de qual posição e até qual posição da string se que analisar naquela chamada.
+Portando, ficaria: word_break_recursive(string, começo, final, dictionary).
+???
+
+AI AQUI TEM QUE DESENVOLVER MAIS, PODEMOS FAZER ISSO JUNTOS!!   
 
 ## Algoritmo de Programação Dinâmica
 
 A ideia de usar a porgramação dinâmica é memoizar a solução de cada subproblema para que não precisemos resolvê-lo várias vezes e possamos usar os resultados pré-calculados para resolver o problema.
 
-??? Exercício 6
+??? Exercício 7
 
 Sabendo do que foi exposto acima, quais seriam os passos para implementar a versão de programação dinâmica para este algoritmo?
 
@@ -224,7 +241,7 @@ function wordBreak(s, começo, final, dicionario):
                 analiso o resto da string (recursiva de novo)
 ```
 
-??? Exercício 7
+??? Exercício 8
 
 Qual é a complexidade da versão de Programação Dinâmica do algoritmo que resolve o problema de quebra de palavras?
 
@@ -238,7 +255,7 @@ A complexidade é $O(n^2)$.
 
 ## Desafio
 
-??? Exercício 8
+??? Exercício 9
 
 Apesar de nosso algoritmo ter uma ótima vantagem ao se ter um banco de palavras bem grande,
 pela forma que ele resolve, ele não é tão bom quanto poderia ser, como uma inteligência artificial. Ele não deixa de ser bastante útil mas poderia ser mais desenvolvido
