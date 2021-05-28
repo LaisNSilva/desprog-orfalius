@@ -44,24 +44,23 @@ Bom, o nome já é bem intuitivo com relação a esse problema. Porém, vamos su
 foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com que a pesquisa [[celularmotorola]] e outras semelhantes - [[liquidificadorarno]], [[livroharrypotter]] - não deem uma mensagem de erro pedindo para a pessoa que digitou usar outros termos, mas sim adaptar para que a própria loja interprete o que poderia ser e retorne resultados, assim como ocorre na Amazon.
 
 Para você mostrar suas habilidades como novo desenvolvedor, você pode usar nosso algoritmo,
-que resolve o _Problema da Quebra em Palavras_. No caso, este algoritimo é uma simplificação, ele não quebra o texto em si, devolvendo a resposta a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
+que resolve o _Problema da Quebra em Palavras_.
+
+É importante ressaltar que este algoritimo é uma **simplificação**: ele não quebra o texto em si, devolvendo a resposta, a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
 
 Tá, vamos explicar como funciona como uma linguagem mais de programador.
 
 ## Ideia Geral do Algoritmo
 
-A ideia deste algoritmo é que dado o resultado de uma digitação - como uma palavra (sendo válida ou não) - e um banco com palavras, o algoritmo irá dizer se essa entrada pode ser segmentada em uma frase, resultado de junção de palavras do dicionário, espaçadas entre si.​ Caso a entrada possa ser segmentada o algoritmo retorna **{green}(True)**, caso não possa retorna **{red}(False)**.
+A ideia geral da resolução do problema é que dado um _texto de entrada_ e um banco com **palavras** válidas, o algoritmo irá dizer se esse _texto_ pode ser segmentado em uma frase, a qual é resultado de uma junção de **palavras** do dicionário. Caso a entrada possa ser segmentada, o algoritmo retorna **{green}(True)**. Caso contrário, devolve **{red}(False)**
 
 Vamos entender melhor... Supondo que temos um banco de palavras interno:
 
 ```py
 {
-    "liquidificador", "celular", "arno", "motorola",
-    "livro", "geladeira", "ar", "condicionado", "harry",
-    "potter", "fone", "ouvido", "xiaomi", "samsung", "sony",
-    "playstation", "monitor", "smartphone", "galaxy",
-    "moto", "panela", "copo", "talher", "vidro", "vermelho",
-    "sam", "sung"
+    "liquidificador", "celular", "geladeira",
+    "ar", "condicionado", "fone", "ouvido",
+    "samsung", "panela", "sam", "sung", "galaxy",
 }
 ```
 
@@ -76,10 +75,10 @@ Considerando os seguintes textos de entrada e considerando o banco de palavras a
 
 :::Gabarito
 
--   [[samsunggalaxy]]: {green}(True), pois no dicionário há as palavras samsung e galaxy, por exemplo.
--   [[fonedeouvido]]: {red}(False), nesse caso, temos algo muito interessante... nós sabemos que o texto "fonedeouvido" é quebrável em 3 palavras, porém no contexto pede-se que seja considerado o banco de palavras que foi dado, como a palavra "de" não esta neste banco, tem-se que nesse caso o texto não pode ser quebrado.
--   [[argeladeira]]: {green}(True), pois no dicionário há as palavras ar e geladeira.
--   [[panelar]]: {red}(False), pois é apenas uma palavra.
+-   [[samsunggalaxy]]: {green}(True), pois no dicionário há as palavras [[samsung]] e [[galaxy]], por exemplo.
+-   [[fonedeouvido]]: {red}(False). Nesse caso, temos algo muito interessante... Intuitivamente, nós sabemos que o texto [[fonedeouvido]] é quebrável em 3 palavras: [[fone]], [[de]], [[ouvido]]. Porém, no contexto pede-se que seja considerado o **banco de palavras** que foi dado, como a palavra [[de]] não está neste banco, tem-se que nesse caso o texto não pode ser quebrado.
+-   [[argeladeira]]: {green}(True), pois no dicionário há as palavras [[ar]] e [[geladeira]].
+-   [[panelar]]: {red}(False), pois há apenas uma palavra no dicionário: [[panela]] e não possui [[r]].
 
 ???
 
@@ -97,13 +96,17 @@ que retornaria as opções faria é simplesmente mostraria as duas possibilidade
 
 ` samsung galaxy` e ` sam sung galaxy`
 
+!!! Lembrete
+Essas frases seriam formadas num código mais aprofundado, que consegue retornar as possibilidades de frases. No nosso caso, a ideia é retornar **True** ou **False**, pois estamos lidando com uma simplificação, ou um início de modelagem.
+!!!
+
 ???
 
 Note que não é apenas repartir os textos, eles devem ser repartidos nos pontos certos, para que todo ele seja segmentada da maneira correta!
 
 Para conseguir repartir a string de entrada nesse locais corretos, o algoritmo vai pegando cada letra da esquerda para a direira e vai formando substrings.
 Se o algoritmo checar que a parte esquerda da string está no banco de palavras, resta descobrir se a parte direita que restou também pode ser segmentada em outras palavras presentes no banco de palavras.
-Ou seja, a partir do momento em que o algoritmo encontra a palavra da esquerda, ele deve resolver o mesmo problema, muito similar ao problema original, porém só para a parte da direta da string, então um problema menor.
+Ou seja, a partir do momento em que o algoritmo encontra a palavra da esquerda, ele deve resolver o mesmo problema, _muito similar ao problema original_, porém só para a parte da direta da string, então um **problema menor**.
 
 ??? Exercício 4
 
@@ -134,7 +137,7 @@ funcao word_break(string, dicionario):
     devolve false
 ```
 
-Para deixar de uma maneira compreensível, vamos usar python, que é uma implementação real
+Para deixar de uma maneira compreensível, vamos usar Python, que é uma implementação real
 dessa ideia do pseucódigo:
 
 ```py
@@ -153,9 +156,9 @@ def word_break_recursive(string, dictionary):
 Se quiser rodar esse código e fazer um teste, use [esse site](https://replit.com/languages/python3), dá para compilar o arquivo online!
 !!!
 
-O que o código está fazendo é percorrer um for com o tamanho da string e ir analisando passo a passo se a substring analisada está contida no dicionário de palavras que foi passado, que seria o nosso _banco de palavras_.
+O que o código está fazendo é percorrer um **_for_** com o tamanho da string e ir analisando passo a passo se a substring analisada está contida no dicionário de palavras que foi passado, que seria o nosso _banco de palavras_.
 
-Ou seja, se tiver uma string [[motorola]], o código irá analisar:
+Ou seja, se temos uma string [[motorola]], o código irá analisar:
 
 1. [[m]] **and** recursão de [[otorola]]
 2. [[mo]] **and** recursão de [[torola]]
@@ -163,13 +166,23 @@ Ou seja, se tiver uma string [[motorola]], o código irá analisar:
 
 e assim sucessivamente...
 
-Porém essa solução tem um problema...
+Um outro exemplo para exemplificar: se temos o texto de entrada [[abcde]], será analisado:
 
-Esta versão do algoritmo tem subproblemas sobrepostos e subestrutura ótima. Ou seja, analisa-se a mesma substring mais de um vez e soluciona problemas a partir da resolução de subproblemas, tendo assim uma complexidade horrível.
+1. [[a]] **and** recursão de [[bcde]], ou seja, essa recursão vai quebrar esse [[bcde]] em textos menores para verificar se está dentro do banco, como em [[cde]], [[de]], [[e]].
+2. [[ab]] **and** recursão de [[cde]]
+3. [[abc]] **and** recursão de [[de]]
+
+e assim sucessivamente novamente...
+
+Porém essa solução tem um problema que é possível verificar nesse segundo exemplo com o [[cde]].
+
+Esta versão do algoritmo tem subproblemas sobrepostos e subestrutura ótima. Ou seja, analisa-se a mesma substring mais de um vez e soluciona problemas a partir da resolução de subproblemas, tendo assim uma complexidade horrível. No exemplo acima, é possível ver que o [[cde]] é analisado tanto no **passo 1**, quando faz parte da recursão da _string da direita_ quanto no passo 2, ao ser a própria _string da direita_.
 
 Para ilustrar melhor, observe a seguinte árvore que mostra as substrings analisadas no algoritmo:
 
 ![](recursion.png)
+
+Como é possível analisar, as mesmas strings são analisadas várias vezes e isso faz com que o código vá ficando lento e acaba não sendo tão eficiente quanto poderia ser, ao evitar essas repetições.
 
 ??? Exercício 5
 
@@ -198,7 +211,7 @@ Sim, é possível sempre passar a mesma string e cada vez analisar uma parte dif
 Portando, ficaria: word_break_recursive(string, começo, final, dictionary).
 ???
 
-AI AQUI TEM QUE DESENVOLVER MAIS, PODEMOS FAZER ISSO JUNTOS!!   
+AI AQUI TEM QUE DESENVOLVER MAIS, PODEMOS FAZER ISSO JUNTOS!!
 
 ## Algoritmo de Programação Dinâmica
 
