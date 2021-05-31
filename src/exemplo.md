@@ -46,9 +46,9 @@ foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com 
 Para você mostrar suas habilidades como novo desenvolvedor, você pode usar nosso algoritmo,
 que resolve o _Problema da Quebra em Palavras_.
 
-É importante ressaltar que este algoritimo é uma **simplificação**: ele não quebra o texto em si, devolvendo a resposta, a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
+É importante ressaltar que este algoritmo é uma **simplificação**: ele não quebra o texto em si, ou seja, não devolve a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
 
-Tá, vamos explicar como funciona como uma linguagem mais de programador.
+Tá, vamos explicar como funciona com uma linguagem mais de programador.
 
 ## Ideia Geral do Algoritmo
 
@@ -66,7 +66,7 @@ Vamos entender melhor... Supondo que temos um banco de palavras interno:
 
 ??? Exercício 2
 
-Considerando os seguintes textos de entrada e considerando o banco de palavras acima, o que, para cada uma dela, o algoritmo retornaria?
+Considerando os seguintes textos de entrada e considerando o banco de palavras acima, o que, para cada uma delas, o algoritmo retornaria?
 
 -   **[[samsunggalaxy]]**
 -   **[[fonedeouvido]]**
@@ -76,7 +76,7 @@ Considerando os seguintes textos de entrada e considerando o banco de palavras a
 :::Gabarito
 
 -   [[samsunggalaxy]]: {green}(True), pois no dicionário há as palavras [[samsung]] e [[galaxy]], por exemplo.
--   [[fonedeouvido]]: {red}(False). Nesse caso, temos algo muito interessante... Intuitivamente, nós sabemos que o texto [[fonedeouvido]] é quebrável em 3 palavras: [[fone]], [[de]], [[ouvido]]. Porém, no contexto pede-se que seja considerado o **banco de palavras** que foi dado, como a palavra [[de]] não está neste banco, tem-se que nesse caso o texto não pode ser quebrado.
+-   [[fonedeouvido]]: {red}(False). Nesse caso, temos algo muito interessante... Intuitivamente, nós sabemos que o texto [[fonedeouvido]] é quebrável em 3 palavras: [[fone]], [[de]], [[ouvido]]. Porém, no contexto pede-se que seja considerado o **banco de palavras** que foi dado. Como a palavra [[de]] não está neste banco, tem-se que nesse caso o texto não pode ser quebrado.
 -   [[argeladeira]]: {green}(True), pois no dicionário há as palavras [[ar]] e [[geladeira]].
 -   [[panelar]]: {red}(False), pois há apenas uma palavra no dicionário: [[panela]] e não possui [[r]].
 
@@ -84,7 +84,7 @@ Considerando os seguintes textos de entrada e considerando o banco de palavras a
 
 ??? Exercício 3
 
-Considerando os textos que retonaram **{green}(True)**, como elas ficariam depois de serem corrigidas, ou seja, depois de os espaços serem colocados?
+Considerando os textos que retonaram **{green}(True)**, como as frases formadas pela quebra dos textos de entrada ficariam depois de serem corrigidas, ou seja, depois de os espaços serem colocados?
 
 :::Gabarito
 
@@ -102,11 +102,11 @@ Essas frases seriam formadas num código mais aprofundado, que consegue retornar
 
 ???
 
-Note que não é apenas repartir os textos, eles devem ser repartidos nos pontos certos, para que todo ele seja segmentada da maneira correta!
+Note que não é apenas repartir os textos, eles devem ser repartidos nos pontos certos, para que ele todo seja segmentado da maneira correta!
 
-Para conseguir repartir a string de entrada nesse locais corretos, o algoritmo vai pegando cada letra da esquerda para a direira e vai formando substrings.
-Se o algoritmo checar que a parte esquerda da string está no banco de palavras, resta descobrir se a parte direita que restou também pode ser segmentada em outras palavras presentes no banco de palavras.
-Ou seja, a partir do momento em que o algoritmo encontra a palavra da esquerda, ele deve resolver o mesmo problema, _muito similar ao problema original_, porém só para a parte da direta da string, então um **problema menor**.
+Para conseguir repartir a string de entrada nesses locais corretos, o algoritmo vai pegando cada letra da esquerda para a direira e vai formando substrings.
+Se o algoritmo checar que a parte esquerda da string está no banco de palavras, resta descobrir se a parte direita que restou também pode ser segmentada em outras palavras presentes no banco.
+Ou seja, a partir do momento em que o algoritmo encontra a substring da esquerda, ele deve resolver o mesmo problema, _muito similar ao problema original_, porém só para a parte da direta da string, então um **problema menor**.
 
 ??? Exercício 4
 
@@ -166,7 +166,42 @@ Ou seja, se temos uma string [[motorola]], o código irá analisar:
 
 e assim sucessivamente...
 
-Um outro exemplo para exemplificar: se temos o texto de entrada [[abcde]], será analisado:
+## Modificando o Algoritmo Recursivo
+
+Agora que já entendemos como a versão recursiva desse algoritmo funciona, vamos fazer uma modificação para que possamos devolver mais a ideia deste algoritmo.
+
+Na versão recursiva apresentada, todas as vezes que chamamos a função, passamos um string diferente para ela, que é uma substring gerada a partir do argumento que foi passado anteriormente.
+
+??? Exercício 5
+
+Existe alguma maneira de fazer com que em todas as chamadas seja passada a mesma string, porém em cada chamada analisar uma parte diferente dessa string? Se sim, escreva como ficaria os parâmetros dessa função.
+
+:::Gabarito
+Sim, é possível sempre passar a mesma string e cada vez analisar uma parte diferente, basta que passemos a partir de qual posição e até qual posição da string se que analisar naquela chamada.
+Portanto, ficaria:
+
+```py
+def word_break_recursive(string, start, end, dictionary)
+```
+
+???
+
+Desenvolvendo a função usando esses novos parâmetro teriamos o seguinte código:
+
+```py
+def word_break_recursive(string, start, end, dictionary):
+    n = len(string[start:end+1])
+    if n == 0:
+        return True
+    for i in range(start, end+1):
+        if dictionary.__contains__(string[start: i]) and word_break_recursive(string, i, n, dictionary):
+            return True
+    return False
+```
+
+Observe que a lógica é muito parecida com a anterior, apenas obedecendo a condição proposta nesse tópico, ou seja, passando para as chamadas das funções sempre o mesmo texto de entrada. Assim funciona igual a anterior, quebrando e analisando o texto de entrada da mesma forma.
+
+Por exemplo: se temos o texto de entrada [[abcde]], será analisado:
 
 1. [[a]] **and** recursão de [[bcde]], ou seja, essa recursão vai quebrar esse [[bcde]] em textos menores para verificar se está dentro do banco, como em [[cde]], [[de]], [[e]].
 2. [[ab]] **and** recursão de [[cde]]
@@ -184,7 +219,7 @@ Para ilustrar melhor, observe a seguinte árvore que mostra as substrings analis
 
 Como é possível analisar, as mesmas strings são analisadas várias vezes e isso faz com que o código vá ficando lento e acaba não sendo tão eficiente quanto poderia ser, ao evitar essas repetições.
 
-??? Exercício 5
+??? Exercício 6
 
 Já vimos em outro momento da disciplina que, quando temos um problema com essa situação da recursividade, já que utilizá-la pode demorar muito por não ser tão eficiente, podíamos usar uma estratégia melhor como alternativa. Qual era essa estratégia?
 
@@ -196,26 +231,9 @@ Lembre-se de uma das nossas APS!
 Usamos isso na APS 3, de DNA. A solução é utilizar a **programação dinâmica**, pois com ela se evita de repetir o serviço que já foi feito, ou seja, a substring que já foi analisada não precisa ser analisada novamente, é só utilizar o valor que está armazenada numa matriz que construímos.
 ???
 
-## Modificando o Algoritmo Recursivo
-
-Agora que já entendemos como a versão recursiva desse algoritmo funciona, vamos fazer uma modificação para que possamos devolver mais a ideia deste algoritmo.
-
-Na versão recursiva apresentada, todas as vezes que chamamos a função, passamos um string diferente para ela, que é uma substring gerada a partir do argumento que foi passado anteriormente.
-
-??? Exercício 6
-
-Existe alguma maneira de fazer com que em todas as chamadas seja passada a mesma string, porém em cada chamada analisar uma parte diferente dessa string? Se sim, escreva como ficaria os parâmetros dessa função.
-
-:::Gabarito
-Sim, é possível sempre passar a mesma string e cada vez analisar uma parte diferente, basta que passemos a partir de qual posição e até qual posição da string se que analisar naquela chamada.
-Portando, ficaria: word_break_recursive(string, começo, final, dictionary).
-???
-
-AI AQUI TEM QUE DESENVOLVER MAIS, PODEMOS FAZER ISSO JUNTOS!!
-
 ## Algoritmo de Programação Dinâmica
 
-A ideia de usar a porgramação dinâmica é memoizar a solução de cada subproblema para que não precisemos resolvê-lo várias vezes e possamos usar os resultados pré-calculados para resolver o problema.
+A ideia de usar a programação dinâmica é memoizar a solução de cada subproblema para que não precisemos resolvê-lo várias vezes e possamos usar os resultados pré-calculados para resolver o problema.
 
 ??? Exercício 7
 
