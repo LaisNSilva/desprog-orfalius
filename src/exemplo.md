@@ -46,7 +46,7 @@ foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com 
 Para você mostrar suas habilidades como novo desenvolvedor, você pode usar nosso algoritmo,
 que resolve o _Problema da Quebra em Palavras_.
 
-É importante ressaltar que este algoritmo é uma **simplificação**: ele não quebra o texto em si, ou seja, não devolve a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não.
+É importante ressaltar que este algoritmo é uma **simplificação**: ele não quebra o texto em si, ou seja, não devolve a sugestão do que a pessoa quis escrever, ele apenas analisa se o texto pode ser quebrado ou não. Porém, essa simplificação foi feita por questões didáticas, obter a versão que devolve a quebra de palavras em si exige modificações simples, mantendo a mesma complexidade.
 
 Tá, vamos explicar como funciona com uma linguagem mais de programador.
 
@@ -186,7 +186,43 @@ def word_break_recursive(string, start, end, dictionary)
 
 ???
 
-Desenvolvendo a função usando esses novos parâmetro teriamos o seguinte código:
+Sabendo que agora as coisas serão feitas da forma apresentada acima, vamos desenvolver...
+
+??? Exercício 6
+
+Na versão anterior, tem-se que a primeira coisa a se fazer é obter _n_, o tamanho da string de entrada. Visto que agora a string é sempre a mesma, como esse valor pode ser obtido?
+
+:::Gabarito
+Esse valor pode ser obtido da seguindo forma:
+```py
+n = len(string[start:end+1])
+```
+???
+
+??? Exercício 7
+
+E o _for_, como ficaria depois da modificação para adaptá-lo a esta nova forma?
+
+:::Gabarito
+O for ficaria da seguinte forma:
+```py
+for i in range(start, end+1)
+```
+???
+
+??? Exercício 8
+
+Dentro do for... como seria agora a chamada recursiva?
+
+:::Gabarito
+A chamada recursiva agora é:
+```py
+word_break_recursive(string, i, n, dictionary)
+```
+???
+
+
+Juntando tudo... a função usando os novos parâmetro seé o guinte código:
 
 ```py
 def word_break_recursive(string, start, end, dictionary):
@@ -219,7 +255,7 @@ Para ilustrar melhor, observe a seguinte árvore que mostra as substrings analis
 
 Como é possível analisar, as mesmas strings são analisadas várias vezes e isso faz com que o código vá ficando lento e acaba não sendo tão eficiente quanto poderia ser, ao evitar essas repetições.
 
-??? Exercício 6
+??? Exercício 9
 
 Já vimos em outro momento da disciplina que, quando temos um problema com essa situação da recursividade, já que utilizá-la pode demorar muito por não ser tão eficiente, podíamos usar uma estratégia melhor como alternativa. Qual era essa estratégia?
 
@@ -235,7 +271,7 @@ Usamos isso na APS 3, de DNA. A solução é utilizar a **programação dinâmic
 
 A ideia de usar a programação dinâmica é memoizar a solução de cada subproblema para que não precisemos resolvê-lo várias vezes e possamos usar os resultados pré-calculados para resolver o problema.
 
-??? Exercício 7
+??? Exercício 10
 
 Sabendo do que foi exposto acima, quais seriam os passos para implementar a versão de programação dinâmica para este algoritmo?
 
@@ -255,7 +291,27 @@ Para a implementação é necessário realizar os seguintes passos:
 
 ???
 
-Pensando nesses passos, podemos desenvolver o seguinte pseudocódigo para a versão de programação dinâmica do problema de quebra de palavras.
+Pensando nesses passos, podemos desenvolver um pseudocódigo para a versão de programação dinâmica do problema de quebra de palavras.
+
+Vamos contruir juntos!
+
+??? Exercício 10
+
+Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos mais interessados na função que coloca em prática a programação dinâmica em si. Para começar função, a primeiro coisa a se fazer é implementar dentro da função o passo 3. Portando desenvolva um pseudocódigo com a ideia do passo 4.
+
+:::Gabarito
+
+```py
+
+se a substring de s está no dicionario:
+    matriz[começo][final] = 1
+    devolve true
+
+```
+
+???
+
+
 
 ```py
 function wordBreak(s, começo, final, dicionario):
