@@ -176,6 +176,10 @@ Na versão recursiva apresentada, todas as vezes que chamamos a função, passam
 
 Existe alguma maneira de fazer com que em todas as chamadas seja passada a mesma string, porém em cada chamada analisar uma parte diferente dessa string? Se sim, escreva como ficaria os parâmetros dessa função.
 
+!!! Dica
+Pense: a ideia é analisar as mesmas substrings, igual antes, porém queremos sempre passar a mesma string original. De que forma podemos pegar as substrings dessa maior?
+!!!
+
 :::Gabarito
 Sim, é possível sempre passar a mesma string e cada vez analisar uma parte diferente, basta que passemos a partir de qual posição e até qual posição da string se que analisar naquela chamada.
 Portanto, ficaria:
@@ -204,6 +208,10 @@ n = len(string[start:end+1])
 ??? Exercício 7
 
 E o _for_, como ficaria depois da modificação para adaptá-lo a esta nova forma?
+
+!!! Dica
+Esse exercício é só a linha do for, não o seu conteúdo interno.
+!!!
 
 :::Gabarito
 O _for_ ficaria da seguinte forma:
@@ -285,6 +293,7 @@ Sabendo do que foi exposto acima, quais seriam os passos para implementar a vers
 
 !!! Dica
 Os passos são gerais e bem parecidos com os da APS 3.
+Não precisa fazer código nesse exercício! Escreva apenas o passo a passo.
 !!!
 
 :::Gabarito
@@ -305,7 +314,7 @@ Vamos contruir juntos!
 
 ??? Exercício 11
 
-Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos mais interessados na função que coloca em prática a programação dinâmica em si. Para começar função, a primeiro coisa a se fazer é implementar dentro da função o passo 3. Portanto, desenvolva um pseudocódigo com a ideia do passo 4.
+Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos mais interessados na função que coloca em prática a programação dinâmica em si. Para começar função, a primeira coisa a se fazer é implementar dentro da função o passo 3. Portanto, desenvolva um pseudocódigo com a ideia desse passo.
 
 :::Gabarito
 
@@ -313,7 +322,6 @@ Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos ma
 se a substring de s está no dicionario:
     matriz[começo][final] = 1
     devolve true
-
 ```
 
 ???
@@ -324,9 +332,7 @@ Agora, desenvolva em texto ou em pseudocódico, caso você já esteja confortáv
 
 :::Gabarito
 
-```py
 Deve-se percorrer a string de entrada pedacinho por pedacinho dela e ir checando se esses pedacinhos já foram analisados também. Se já tiverem sido analisados retorna o que se tem de resposta, caso contrário deve-se realiazar a analise chamando a recursiva para assim preencher o espaço correspondente na matriz.
-```
 
 ???
 
