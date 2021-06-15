@@ -229,6 +229,10 @@ Por exemplo: se eu dou um slice da string `motorola` para pegar do índice 0 ao 
 
 Dentro do _for_... como seria agora a chamada recursiva?
 
+!!! Dica
+Lembre-se que agora se tem mais parâmetros na função!
+!!!
+
 :::Gabarito
 A chamada recursiva agora é:
 
@@ -293,7 +297,7 @@ Sabendo do que foi exposto acima, quais seriam os passos para implementar a vers
 
 !!! Dica
 Os passos são gerais e bem parecidos com os da APS 3.
-Não precisa fazer código nesse exercício! Escreva apenas o passo a passo.
+Não precisa fazer código nesse exercício! Escreva apenas o passo a passo de forma mais geral.
 !!!
 
 :::Gabarito
