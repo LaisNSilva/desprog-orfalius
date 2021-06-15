@@ -41,7 +41,7 @@ de erro de digitação, sem apresentar nenhuma sugestão ao possível cliente.
 Ok. Mas qual a relação disso com o nosso algoritmo?
 
 Bom, o nome já é bem intuitivo com relação a esse problema. Porém, vamos supor que você
-foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com que a pesquisa [[celularmotorola]] e outras semelhantes - [[liquidificadorarno]], [[livroharrypotter]] - não deem uma mensagem de erro pedindo para a pessoa que digitou usar outros termos, mas sim adaptar para que a própria loja interprete o que poderia ser e retorne resultados, assim como ocorre na Amazon.
+foi recentemente contratado pela Lojas Americanas e tem como objetivo fazer com que a pesquisa [[celularmotorola]] e outras semelhantes - [[arcondicionado]], [[celulargalaxy]] - não deem uma mensagem de erro pedindo para a pessoa que digitou usar outros termos, mas sim adaptar para que a própria loja interprete o que poderia ser e retorne resultados, assim como ocorre na Amazon.
 
 Para você mostrar suas habilidades como novo desenvolvedor, você pode usar nosso algoritmo,
 que resolve o _Problema da Quebra em Palavras_.
@@ -194,9 +194,11 @@ Na versão anterior, tem-se que a primeira coisa a se fazer é obter _n_, o tama
 
 :::Gabarito
 Esse valor pode ser obtido da seguindo forma:
+
 ```py
 n = len(string[start:end+1])
 ```
+
 ???
 
 ??? Exercício 7
@@ -204,25 +206,31 @@ n = len(string[start:end+1])
 E o _for_, como ficaria depois da modificação para adaptá-lo a esta nova forma?
 
 :::Gabarito
-O for ficaria da seguinte forma:
+O _for_ ficaria da seguinte forma:
+
 ```py
 for i in range(start, end+1)
 ```
+
 ???
+
+É importante ressaltar que em ambos os exercícios existem o `+1` ao relacionar com o `end` porque, no Python, ao fazer um slice, o código pega os itens ignorando o último.
+Por exemplo: se eu dou um slice da string `motorola` para pegar do índice 0 ao 4, o que ele me retorna é `moto`, ignorando a letra que está no índice 4, o `r`.
 
 ??? Exercício 8
 
-Dentro do for... como seria agora a chamada recursiva?
+Dentro do _for_... como seria agora a chamada recursiva?
 
 :::Gabarito
 A chamada recursiva agora é:
+
 ```py
 word_break_recursive(string, i, n, dictionary)
 ```
+
 ???
 
-
-Juntando tudo... a função usando os novos parâmetro seé o guinte código:
+Juntando tudo... a função usando os novos parâmetros é o seguinte código:
 
 ```py
 def word_break_recursive(string, start, end, dictionary):
@@ -295,14 +303,13 @@ Pensando nesses passos, podemos desenvolver um pseudocódigo para a versão de p
 
 Vamos contruir juntos!
 
-??? Exercício 10
+??? Exercício 11
 
-Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos mais interessados na função que coloca em prática a programação dinâmica em si. Para começar função, a primeiro coisa a se fazer é implementar dentro da função o passo 3. Portando desenvolva um pseudocódigo com a ideia do passo 4.
+Os passos 1 e 2 da atividade acima são passos da memoização, agora estamos mais interessados na função que coloca em prática a programação dinâmica em si. Para começar função, a primeiro coisa a se fazer é implementar dentro da função o passo 3. Portanto, desenvolva um pseudocódigo com a ideia do passo 4.
 
 :::Gabarito
 
 ```py
-
 se a substring de s está no dicionario:
     matriz[começo][final] = 1
     devolve true
@@ -311,7 +318,19 @@ se a substring de s está no dicionario:
 
 ???
 
+??? Exercício 12
 
+Agora, desenvolva em texto ou em pseudocódico, caso você já esteja confortável com a ideia, de como aplicar os passos 4 e 5 para o algoritmo de quebra de palavras.
+
+:::Gabarito
+
+```py
+Deve-se percorrer a string de entrada pedacinho por pedacinho dela e ir checando se esses pedacinhos já foram analisados também. Se já tiverem sido analisados retorna o que se tem de resposta, caso contrário deve-se realiazar a analise chamando a recursiva para assim preencher o espaço correspondente na matriz.
+```
+
+???
+
+Juntando tudo o que foi visto, temos que o pseudocódigo para o algoritmo de quebra de palavras utilizando-se da programação dinâmica fica da seguinte forma:
 
 ```py
 function wordBreak(s, começo, final, dicionario):
@@ -328,7 +347,7 @@ function wordBreak(s, começo, final, dicionario):
                 analiso o resto da string (recursiva de novo)
 ```
 
-??? Exercício 8
+??? Exercício 13
 
 Qual é a complexidade da versão de Programação Dinâmica do algoritmo que resolve o problema de quebra de palavras?
 
@@ -342,7 +361,7 @@ A complexidade é $O(n^2)$.
 
 ## Desafio
 
-??? Exercício 9
+??? Exercício 14
 
 Apesar de nosso algoritmo ter uma ótima vantagem ao se ter um banco de palavras bem grande,
 pela forma que ele resolve, ele não é tão bom quanto poderia ser, como uma inteligência artificial. Ele não deixa de ser bastante útil mas poderia ser mais desenvolvido
